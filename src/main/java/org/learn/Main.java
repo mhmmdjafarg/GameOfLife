@@ -10,5 +10,6 @@ public class Main {
         Grid grid = GridInitializer.generateRandomGrid();
         Controller controller = new Controller(grid);
         controller.startGame();
+
     }
 }
