@@ -1,11 +1,11 @@
-package org.learn.util;
+package org.learn.controller;
 
 import org.learn.model.Cell;
+import org.learn.model.CellState;
 import org.learn.model.Grid;
 
-public class Utils {
-
-    public static int countAliveNeighbors(Grid grid, int row, int col) {
+public class GameService {
+    private int countAliveNeighbors(Grid grid, int row, int col) {
         int aliveNeighbors = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -22,11 +22,11 @@ public class Utils {
         return aliveNeighbors;
     }
 
-    public static boolean isShouldLive(Cell cell, int aliveNeighbours) {
+    private boolean isShouldLive(Cell cell, int aliveNeighbours) {
         return cell.isAlive() ? (aliveNeighbours == 2 || aliveNeighbours == 3) : (aliveNeighbours == 3);
     }
 
-    public static boolean isGridEmpty(Grid grid) {
+    public boolean isGridEmpty(Grid grid) {
         for (Cell[] cell : grid.getCells()) {
             for (Cell value : cell) {
                 if (value.isAlive()) {
@@ -35,5 +35,19 @@ public class Utils {
             }
         }
         return true;
+    }
+
+    public Grid nextState(Grid grid) {
+        Cell[][] nextCells = new Cell[grid.getWidth()][grid.getHeight()];
+        int rowSize = grid.getWidth();
+        int colSize = grid.getHeight();
+        for (int i = 0; i < rowSize; i++) {
+            for (int j = 0; j < colSize; j++) {
+                int aliveNeighbours = countAliveNeighbors(grid, i, j);
+                boolean isShouldAlive = isShouldLive(grid.getCells()[i][j], aliveNeighbours);
+                nextCells[i][j] = isShouldAlive ? new Cell(CellState.ALIVE) : new Cell(CellState.EMPTY);
+            }
+        }
+        return new Grid(nextCells);
     }
 }

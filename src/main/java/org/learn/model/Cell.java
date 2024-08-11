@@ -1,8 +1,8 @@
 package org.learn.model;
 
-import org.learn.controller.GameUI;
+import org.learn.ui.Display;
 
-public class Cell implements GameUI {
+public class Cell implements Display {
     private final CellState state;
 
     public Cell(CellState state) {

@@ -1,4 +1,4 @@
-package org.learn.controller;
+package org.learn.util;
 
 import org.learn.model.Cell;
 import org.learn.model.CellState;
@@ -7,7 +7,7 @@ import org.learn.model.Grid;
 import java.util.Random;
 
 public class GridInitializer {
-    private static final int GRID_SIZE = 5;
+    private static final int GRID_SIZE = 10;
 
     public static Grid generateRandomGrid() {
         Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
