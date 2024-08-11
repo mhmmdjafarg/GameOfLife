@@ -1,8 +1,6 @@
 package org.learn.model;
 
-import org.learn.ui.Display;
-
-public class Cell implements Display {
+public class Cell {
     private final CellState state;
 
     public Cell(CellState state) {
@@ -11,10 +9,5 @@ public class Cell implements Display {
 
     public boolean isAlive() {
         return this.state == CellState.ALIVE;
-    }
-
-    @Override
-    public void printConsole() {
-        System.out.print(isAlive() ? "⬜ " : "⬛ ");
     }
 }

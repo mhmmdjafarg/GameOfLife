@@ -1,15 +1,31 @@
 package org.learn.ui;
 
+import org.learn.model.Cell;
 import org.learn.model.Grid;
 
-public class GameRenderer {
+public class GameRenderer implements Display{
+    @Override
+    public void printConsole(Grid grid, int stateCounter) {
+        try {
+            System.out.print("\033\143");
+            System.out.flush();
+            printGrid(grid);
+            Thread.sleep(500);
+        } catch (Exception e) {
+            System.out.printf("Exception %s\n", e.getMessage());
+        }
+    }
 
-    public void renderConsole(Grid grid, int currentStateNumber) {
-        System.out.println("======================== START OF STATE ========================");
-        System.out.printf("State number: %d\n", currentStateNumber);
-        System.out.printf("Alive cells: %d\n", grid.getAliveCells());
-        System.out.printf("Empty cells: %d\n", grid.getEmptyCells());
-        grid.printConsole();
-        System.out.println("========================= END OF STATE =========================");
+    private void printCell(Cell cell) {
+        System.out.print(cell.isAlive() ? "⬛" : "⬜");
+    }
+
+    public void printGrid(Grid grid) {
+        for (Cell[] cell : grid.getCells()) {
+            for (Cell value : cell) {
+                printCell(value);
+            }
+            System.out.println();
+        }
     }
 }

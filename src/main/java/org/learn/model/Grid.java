@@ -1,29 +1,27 @@
 package org.learn.model;
 
-import org.learn.ui.Display;
-
-public class Grid implements Display {
+public class Grid {
     private final Cell[][] cells;
-
-    private final int aliveCells;
-    private final int emptyCells;
 
     public Grid(Cell[][] cells) {
         this.cells = cells;
-        this.aliveCells = countAliveCells();
-        this.emptyCells = getHeight() * getWidth() - aliveCells;
+    }
+
+    public Grid(int height, int width) {
+        this.cells = new Cell[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cells[i][j] = new Cell(CellState.EMPTY);
+            }
+        }
     }
 
     public Cell[][] getCells() {
         return cells;
     }
 
-    public int getAliveCells() {
-        return aliveCells;
-    }
-
-    public int getEmptyCells() {
-        return emptyCells;
+    public void setCell(int x, int y, Cell cell) {
+        this.cells[x][y] = cell;
     }
 
     public int getWidth() {
@@ -45,13 +43,14 @@ public class Grid implements Display {
         return aliveCount;
     }
 
-    @Override
-    public void printConsole() {
-        for (Cell[] cell : cells) {
+    public boolean isGridEmpty() {
+        for (Cell[] cell : this.cells) {
             for (Cell value : cell) {
-                value.printConsole();
+                if (value.isAlive()) {
+                    return false;
+                }
             }
-            System.out.println();
         }
+        return true;
     }
 }

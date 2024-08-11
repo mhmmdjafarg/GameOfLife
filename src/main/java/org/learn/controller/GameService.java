@@ -5,15 +5,15 @@ import org.learn.model.CellState;
 import org.learn.model.Grid;
 
 public class GameService {
-    private int countAliveNeighbors(Grid grid, int row, int col) {
+    private int countAliveNeighbors(Grid grid, int currX, int currY) {
         int aliveNeighbors = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) continue;
-                int r = row + i;
-                int c = col + j;
-                if (r >= 0 && r < grid.getCells().length && c >= 0 && c < grid.getCells()[0].length) {
-                    if (grid.getCells()[r][c].isAlive()) {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (x == 0 && y == 0) continue;
+                int actualX = currX + x;
+                int actualY = currY + y;
+                if (actualX >= 0 && actualX < grid.getWidth() && actualY >= 0 && actualY < grid.getHeight()) {
+                    if (grid.getCells()[actualX][actualY].isAlive()) {
                         aliveNeighbors++;
                     }
                 }
@@ -26,26 +26,15 @@ public class GameService {
         return cell.isAlive() ? (aliveNeighbours == 2 || aliveNeighbours == 3) : (aliveNeighbours == 3);
     }
 
-    public boolean isGridEmpty(Grid grid) {
-        for (Cell[] cell : grid.getCells()) {
-            for (Cell value : cell) {
-                if (value.isAlive()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public Grid nextState(Grid grid) {
         Cell[][] nextCells = new Cell[grid.getWidth()][grid.getHeight()];
         int rowSize = grid.getWidth();
         int colSize = grid.getHeight();
-        for (int i = 0; i < rowSize; i++) {
-            for (int j = 0; j < colSize; j++) {
-                int aliveNeighbours = countAliveNeighbors(grid, i, j);
-                boolean isShouldAlive = isShouldLive(grid.getCells()[i][j], aliveNeighbours);
-                nextCells[i][j] = isShouldAlive ? new Cell(CellState.ALIVE) : new Cell(CellState.EMPTY);
+        for (int row = 0; row < rowSize; row++) {
+            for (int col = 0; col < colSize; col++) {
+                int aliveNeighbours = countAliveNeighbors(grid, row, col);
+                boolean isShouldAlive = isShouldLive(grid.getCells()[row][col], aliveNeighbours);
+                nextCells[row][col] = isShouldAlive ? new Cell(CellState.ALIVE) : new Cell(CellState.EMPTY);
             }
         }
         return new Grid(nextCells);

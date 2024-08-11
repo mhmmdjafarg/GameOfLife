@@ -1,33 +1,30 @@
 package org.learn.controller;
 
 import org.learn.model.Grid;
-import org.learn.ui.GameRenderer;
-
-import static java.lang.Thread.sleep;
+import org.learn.ui.Display;
 
 public class Controller {
     private Grid grid;
-    private final GameRenderer gameRenderer;
+    private final Display display;
     private final GameService gameService;
 
     private int stateCounter = 1;
     private boolean isStart;
 
-    public Controller(Grid grid, GameService gameService, GameRenderer gameRenderer) {
+    public Controller(Grid grid, GameService gameService, Display display) {
         this.grid = grid;
         this.gameService = gameService;
-        this.gameRenderer = gameRenderer;
+        this.display = display;
         this.isStart = true;
     }
 
-    public void startGame() throws InterruptedException {
-        while (!gameService.isGridEmpty(grid) && isStart) {
-            gameRenderer.renderConsole(this.grid, stateCounter);
+    public void startGame() {
+        while (!grid.isGridEmpty() && isStart) {
+            display.printConsole(grid, stateCounter);
             grid = gameService.nextState(grid);
             stateCounter++;
-            sleep(500);
         }
-        gameRenderer.renderConsole(this.grid, stateCounter);
+        display.printConsole(grid, stateCounter);
     }
 
     public void stopAndResetGame() {
