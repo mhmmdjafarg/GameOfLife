@@ -6,6 +6,7 @@ import org.learn.controller.GameService;
 import org.learn.model.Grid;
 import org.learn.ui.FileIO;
 import org.learn.ui.GameRenderer;
+import org.learn.util.GridInitializer;
 
 import java.io.IOException;
 

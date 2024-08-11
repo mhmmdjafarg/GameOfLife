@@ -32,17 +32,6 @@ public class Grid {
         return cells[0].length;
     }
 
-    private int countAliveCells() {
-        int aliveCount = 0;
-        for (Cell[] cell : cells)
-            for (Cell value : cell) {
-                if (value.isAlive()) {
-                    aliveCount++;
-                }
-            }
-        return aliveCount;
-    }
-
     public boolean isGridEmpty() {
         for (Cell[] cell : this.cells) {
             for (Cell value : cell) {
