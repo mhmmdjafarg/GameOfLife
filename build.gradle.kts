@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "org.learn"
@@ -16,4 +17,9 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    // Replace with your main class package and name
+    mainClass.set("org.learn.Main") // Update with the correct package and class name
 }
